@@ -21,6 +21,10 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  flutter_svg: ^0.22.0
+  share: ^0.6.1+1
+  transparent_image: ^1.0.0
+  http: ^0.12.0+2
   flutter:
     sdk: flutter
 
@@ -60,6 +64,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
+        - asset: fonts/Montserrat-BoldItalic.ttf
+          style: italic
+          weight: 700
   # fonts:
   #   - family: Schyler
   #     fonts:
