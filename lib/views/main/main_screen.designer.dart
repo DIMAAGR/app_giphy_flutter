@@ -2,8 +2,12 @@ import 'package:app_giphy_api/components/circular_button.dart';
 import 'package:app_giphy_api/components/gif_topic_button.dart';
 import 'package:app_giphy_api/data/api_request.dart';
 import 'package:app_giphy_api/data/data_requests.dart';
+import 'package:app_giphy_api/store/app_giphy_api.store.dart';
+import 'package:app_giphy_api/views/main/main_screen.events.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -13,78 +17,126 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  //VARIAVEIS
   DataRequest _dataRequest = DataRequest();
+  MainScreenEvents _events = MainScreenEvents();
+
+  //INITSTATE
   @override
   void initState() {
     super.initState();
-    print("SARTED!");
-    // _dataRequest.requestData(null, "0", "1").then((map) {
-    //   print(map);
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
+    AppGiphyApi _provider = Provider.of<AppGiphyApi>(context);
     ApiRequest _apiRequest = ApiRequest(context: context);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 245, 245),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Color.fromARGB(255, 245, 245, 245),
-        title: SvgPicture.network(
-            "https://upload.wikimedia.org/wikipedia/commons/8/82/Giphy-logo.svg"),
-        actions: [
-          CircularButton(
-            padding: 8,
-            icon: Icon(
-              Icons.search,
-              size: 24,
-              color: Color.fromARGB(255, 60, 60, 60),
-            ),
-            onPressed: () {},
-          ),
-          CircularButton(
-            padding: 16,
-            icon: Icon(
-              Icons.settings,
-              size: 24,
-              color: Color.fromARGB(255, 60, 60, 60),
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: _appBar(),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 16,
-            ),
-            // É NECESSÁRIO UM FUTURE BUILDER PARA CARREGAR AS INFORMAÇÕES
-            // DA API DENTRO DA INTERFACE
-            _topicButton(context, _apiRequest, null, "Trending"),
-            _topicButton(context, _apiRequest, "reactions", "Reactions"),
-            _topicButton(
-                context, _apiRequest, "entertainment", "Entertainment"),
-            _topicButton(context, _apiRequest, "sports", "Sports"),
-            _topicButton(context, _apiRequest, "Stickers", "Stickers"),
-            _topicButton(context, _apiRequest, "Artists", "Artists"),
-          ],
+        child: Observer(
+          builder: (_) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 16,
+              ),
+              // É NECESSÁRIO UM FUTURE BUILDER PARA CARREGAR AS INFORMAÇÕES
+              // DA API DENTRO DA INTERFACE
+              _topicButton(
+                context,
+                _apiRequest,
+                null,
+                "Trending",
+                () => _events.topicbuttonAction(context, _provider, "Trending"),
+              ),
+              _topicButton(
+                context,
+                _apiRequest,
+                "reactions",
+                "Reactions",
+                () =>
+                    _events.topicbuttonAction(context, _provider, "Reactions"),
+              ),
+              _topicButton(
+                context,
+                _apiRequest,
+                "entertainment",
+                "Entertainment",
+                () => _events.topicbuttonAction(
+                    context, _provider, "entertainment"),
+              ),
+              _topicButton(
+                context,
+                _apiRequest,
+                "sports",
+                "Sports",
+                () => _events.topicbuttonAction(context, _provider, "sports"),
+              ),
+              _topicButton(
+                context,
+                _apiRequest,
+                "Stickers",
+                "Stickers",
+                () => _events.topicbuttonAction(context, _provider, "Stickers"),
+              ),
+              _topicButton(
+                context,
+                _apiRequest,
+                "Artists",
+                "Artists",
+                () => _events.topicbuttonAction(context, _provider, "Artists"),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  AppBar _appBar() {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Color.fromARGB(255, 245, 245, 245),
+      title: SvgPicture.network(
+          "https://upload.wikimedia.org/wikipedia/commons/8/82/Giphy-logo.svg"),
+      actions: [
+        Row(
+          children: [
+            CircularButton(
+              padding: 8,
+              icon: Icon(
+                Icons.search,
+                size: 24,
+                color: Color.fromARGB(255, 60, 60, 60),
+              ),
+              onPressed: () {},
+            ),
+            CircularButton(
+              padding: 16,
+              icon: Icon(
+                Icons.settings,
+                size: 24,
+                color: Color.fromARGB(255, 60, 60, 60),
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   _topicButton(BuildContext context, ApiRequest apiRequest, String? search,
-      String topicName) {
+      String topicName, void Function() onTap) {
     return FutureBuilder(
-      future: _dataRequest.requestData(search, "0", "1"),
+      future: _dataRequest.requestData(search, "0", "10"),
       builder: (context, snapshot) => _topics(
           context: context,
           snapshot: snapshot,
           apiRequest: apiRequest,
-          onTap: () {},
+          onTap: onTap,
           topicName: topicName),
     );
   }
