@@ -1,9 +1,12 @@
+import 'package:app_giphy_api/components/grid_button.dart';
+import 'package:app_giphy_api/data/data_requests.dart';
 import 'package:flutter/material.dart';
 
 class ApiRequest {
   BuildContext context;
   ApiRequest({required this.context});
 
+  // VERIFICA SE HOUVE UM ERRO
   Widget sendWaitOrErrorMessage({
     required AsyncSnapshot snapshot,
   }) {
@@ -16,6 +19,10 @@ class ApiRequest {
     }
   }
 
+  // RETORNA O ERRO COMO WIDGET
+  Widget getErrorMessage(AsyncSnapshot snapshot) => _errormessage(snapshot);
+
+  // WIDGET DE ERRO
   Widget _errormessage(AsyncSnapshot snapshot) {
     return Column(
       children: [
@@ -64,5 +71,49 @@ class ApiRequest {
         ),
       ],
     );
+  }
+
+  // FAZ O BUILD DA GRID!
+  gifGridBuilder({
+    required String search,
+    required ApiRequest request,
+    required DataRequest data,
+    required BuildContext context,
+  }) {
+    // COMEÇA RETORNANDO UM FUTURE BUILD
+    return FutureBuilder(
+        // RECEBE O REQUEST DATA PARA CONSTRUIR A GRADE
+        future: data.requestData(search, "0", "40"),
+        // BUILDER
+        builder: (context, snapshot) {
+          // VERIFICA SE A CONEXÇÃO FOI ATIVA OU SE HOUVE UM ERRO
+          switch (snapshot.connectionState) {
+            case ConnectionState.active:
+            case ConnectionState.done:
+              // CASO ESTEJA TUDO CORRETO CRIA A GRID DE GIFS
+              return _gifGridButtonBuilder(context, snapshot);
+            default:
+              return request.sendWaitOrErrorMessage(
+                snapshot: snapshot,
+              );
+          }
+        });
+  }
+
+  // CRIA A GRID DE GIFS
+  _gifGridButtonBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+        ),
+        shrinkWrap: true,
+        // TAMANHO DA GRID
+        itemCount: snapshot.data["data"].length,
+        // CONSTRUTOR DE ITEM
+        itemBuilder: (context, index) {
+          return GridButton(snapshot: snapshot, index: index);
+        });
   }
 }
