@@ -39,6 +39,36 @@ mixin _$AppGiphyApi on _AppGiphyApi, Store {
     });
   }
 
+  final _$urlAtom = Atom(name: '_AppGiphyApi.url');
+
+  @override
+  String get url {
+    _$urlAtom.reportRead();
+    return super.url;
+  }
+
+  @override
+  set url(String value) {
+    _$urlAtom.reportWrite(value, super.url, () {
+      super.url = value;
+    });
+  }
+
+  final _$languageAtom = Atom(name: '_AppGiphyApi.language');
+
+  @override
+  String get language {
+    _$languageAtom.reportRead();
+    return super.language;
+  }
+
+  @override
+  set language(String value) {
+    _$languageAtom.reportWrite(value, super.language, () {
+      super.language = value;
+    });
+  }
+
   final _$_AppGiphyApiActionController = ActionController(name: '_AppGiphyApi');
 
   @override
@@ -64,10 +94,23 @@ mixin _$AppGiphyApi on _AppGiphyApi, Store {
   }
 
   @override
+  void changeUrl(String url) {
+    final _$actionInfo = _$_AppGiphyApiActionController.startAction(
+        name: '_AppGiphyApi.changeUrl');
+    try {
+      return super.changeUrl(url);
+    } finally {
+      _$_AppGiphyApiActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 search: ${search},
-topic: ${topic}
+topic: ${topic},
+url: ${url},
+language: ${language}
     ''';
   }
 }

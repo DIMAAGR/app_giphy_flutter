@@ -17,6 +17,10 @@ abstract class _AppGiphyApi with Store {
   String search = "";
   @observable
   String topic = "";
+  @observable
+  String url = "";
+  @observable
+  String language = "pt";
 
 // ACTIONS
 
@@ -24,4 +28,6 @@ abstract class _AppGiphyApi with Store {
   void changeSearch(String search) => this.search = search;
   @action
   void changeTopic(String topic) => this.topic = topic;
+  @action
+  void changeUrl(String url) => this.url = url;
 }
