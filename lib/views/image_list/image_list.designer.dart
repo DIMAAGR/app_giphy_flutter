@@ -1,4 +1,5 @@
 import 'package:app_giphy_api/components/circular_button.dart';
+import 'package:app_giphy_api/components/giphy_app_bar.dart';
 import 'package:app_giphy_api/data/api_request.dart';
 import 'package:app_giphy_api/data/data_requests.dart';
 import 'package:app_giphy_api/store/app_giphy_api.store.dart';
@@ -27,7 +28,7 @@ class _GifListState extends State<GifList> {
     print(search);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 245, 245),
-      appBar: _appBar(),
+      appBar: GiphyAppBar(),
       body: _result(context, _apiRequest, search),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:app_giphy_api/components/circular_button.dart';
 import 'package:app_giphy_api/components/gif_topic_button.dart';
+import 'package:app_giphy_api/components/giphy_app_bar.dart';
 import 'package:app_giphy_api/data/api_request.dart';
 import 'package:app_giphy_api/data/data_requests.dart';
 import 'package:app_giphy_api/store/app_giphy_api.store.dart';
@@ -33,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
     ApiRequest _apiRequest = ApiRequest(context: context);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 245, 245),
-      appBar: _appBar(),
+      appBar: GiphyAppBar(),
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) => Column(
@@ -92,39 +93,6 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  AppBar _appBar() {
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Color.fromARGB(255, 245, 245, 245),
-      title: SvgPicture.network(
-          "https://upload.wikimedia.org/wikipedia/commons/8/82/Giphy-logo.svg"),
-      actions: [
-        Row(
-          children: [
-            CircularButton(
-              padding: 8,
-              icon: Icon(
-                Icons.search,
-                size: 24,
-                color: Color.fromARGB(255, 60, 60, 60),
-              ),
-              onPressed: () {},
-            ),
-            CircularButton(
-              padding: 16,
-              icon: Icon(
-                Icons.settings,
-                size: 24,
-                color: Color.fromARGB(255, 60, 60, 60),
-              ),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ],
     );
   }
 
