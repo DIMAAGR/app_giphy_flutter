@@ -1,5 +1,6 @@
 import 'package:app_giphy_api/store/app_giphy_api.store.dart';
 import 'package:app_giphy_api/utils/app_routes.dart';
+import 'package:app_giphy_api/views/gif_view/gif_view.designer.dart';
 import 'package:app_giphy_api/views/image_list/image_list.designer.dart';
 import 'package:app_giphy_api/views/main/main_screen.designer.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         home: MainScreen(),
         routes: {
           AppRoutes.HOME: (ctx) => MainScreen(),
-          AppRoutes.GIF_LIST: (ctx) => GifList()
+          AppRoutes.GIF_LIST: (ctx) => GifList(),
+          AppRoutes.GIF_VIEW: (ctx) => GifView(),
         },
       ),
     );
