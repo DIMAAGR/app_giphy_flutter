@@ -1,5 +1,9 @@
+import 'package:app_giphy_api/store/app_giphy_api.store.dart';
+import 'package:app_giphy_api/utils/app_routes.dart';
+import 'package:app_giphy_api/views/image_list/image_list.designer.dart';
 import 'package:app_giphy_api/views/main/main_screen.designer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,12 +12,23 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        Provider<AppGiphyApi>(
+          create: (_) => AppGiphyApi(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MainScreen(),
+        routes: {
+          AppRoutes.HOME: (ctx) => MainScreen(),
+          AppRoutes.GIF_LIST: (ctx) => GifList()
+        },
       ),
-      home: MainScreen(),
     );
   }
 }
