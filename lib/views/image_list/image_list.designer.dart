@@ -28,53 +28,8 @@ class _GifListState extends State<GifList> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 245, 245),
       appBar: _appBar(),
-      body: Padding(
-          padding: EdgeInsets.all(8),
-          child: _searchGrid(context, _apiRequest, search, "", () {})),
+      body: _result(context, _apiRequest, search),
     );
-  }
-
-  _gifButtonBuilder(
-    BuildContext context,
-    AsyncSnapshot snapshot,
-  ) {
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        shrinkWrap: true,
-        itemCount: snapshot.data["data"].length,
-        itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Color.fromARGB(255, 230, 230, 230),
-              image: DecorationImage(
-                  image: NetworkImage(snapshot.data["data"][index]["images"]
-                      ["original"]["webp"]),
-                  fit: BoxFit.cover),
-            ),
-          );
-        });
-  }
-
-  _searchGrid(BuildContext context, ApiRequest apiRequest, String? search,
-      String topicName, void Function() onTap) {
-    return FutureBuilder(
-        future: _dataRequest.requestData(search, "0", "40"),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.active:
-            case ConnectionState.done:
-              return _gifButtonBuilder(context, snapshot);
-            default:
-              return apiRequest.sendWaitOrErrorMessage(
-                snapshot: snapshot,
-              );
-          }
-        });
   }
 
   //APPBAR
@@ -109,6 +64,15 @@ class _GifListState extends State<GifList> {
           ],
         ),
       ],
+    );
+  }
+
+  // INTERFACE/BODY DO IMAGE LIST
+  _result(BuildContext context, ApiRequest api, String search) {
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: api.gifGridBuilder(
+          search: search, request: api, data: _dataRequest, context: context),
     );
   }
 }
