@@ -14,12 +14,16 @@ class DataRequest {
     http.Response response; // CRIA UM HTTP RESPONSE
 
     // VERIFICA SE É UMA PESQUISA!
-    if (search == null) // SE NÃO FOR, REQUISITARÁ OS TRENDINGS
-      response = await http.get(
-          "https://api.giphy.com/v1/gifs/trending?api_key=DVZH7cEK2v8srRKFhOspvNNHqMVYbR1U&limit=$quantity&rating=g");
+
+    Uri uri1 = Uri.parse(
+        "https://api.giphy.com/v1/gifs/trending?api_key=DVZH7cEK2v8srRKFhOspvNNHqMVYbR1U&limit=$quantity&rating=g");
+    Uri uri2 = Uri.parse(
+        "https:api.giphy.com/v1/gifs/search?api_key=DVZH7cEK2v8srRKFhOspvNNHqMVYbR1U&q=$search&limit=$quantity&offset=$offSet&rating=g&lang=pt");
+    if (search == null ||
+        search == "Trending") // SE NÃO FOR, REQUISITARÁ OS TRENDINGS
+      response = await http.get(uri1);
     else // SE FOR, FARÁ A PESQUISA
-      response = await http.get(
-          "https://api.giphy.com/v1/gifs/search?api_key=DVZH7cEK2v8srRKFhOspvNNHqMVYbR1U&q=$search&limit=$quantity&offset=$offSet&rating=g&lang=pt");
+      response = await http.get(uri2);
 
     return json.decode(
         response.body); // NO FINAL RETORNARÁ O CORPO DO JSON (RESPONSE)!
