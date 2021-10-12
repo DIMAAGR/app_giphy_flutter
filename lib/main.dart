@@ -3,6 +3,7 @@ import 'package:app_giphy_api/utils/app_routes.dart';
 import 'package:app_giphy_api/views/gif_view/gif_view.designer.dart';
 import 'package:app_giphy_api/views/image_list/image_list.designer.dart';
 import 'package:app_giphy_api/views/main/main_screen.designer.dart';
+import 'package:app_giphy_api/views/search_view/search_view.desiger.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,11 +25,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MainScreen(),
         routes: {
           AppRoutes.HOME: (ctx) => MainScreen(),
           AppRoutes.GIF_LIST: (ctx) => GifList(),
           AppRoutes.GIF_VIEW: (ctx) => GifView(),
+          AppRoutes.SEARCH_VIEW: (ctx) => SearchView(),
         },
       ),
     );
