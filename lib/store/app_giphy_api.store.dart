@@ -1,3 +1,4 @@
+import 'package:app_giphy_api/data/gif_property.dart';
 import 'package:mobx/mobx.dart';
 
 part 'app_giphy_api.store.g.dart';
@@ -18,9 +19,21 @@ abstract class _AppGiphyApi with Store {
   @observable
   String topic = "";
   @observable
-  String url = "";
-  @observable
   String language = "pt";
+  @observable
+  List<String> searchHistory = [];
+
+  // GIF PROPERTY SÃO AS PROPRIEDADES DO GIF
+  // DESSA FORMA FICA MAIS FACI DE ENVIAR AS INFORMAÇÕES DO GIF
+  // PARA OUTRAS PAGINAS!
+  @observable
+  GifProperty gifProperty = GifProperty(
+    gifUrl: "",
+    hdMp4Url: "",
+    p480Mp4Url: "",
+    title: "",
+    username: "",
+  );
 
 // ACTIONS
 
@@ -29,5 +42,11 @@ abstract class _AppGiphyApi with Store {
   @action
   void changeTopic(String topic) => this.topic = topic;
   @action
-  void changeUrl(String url) => this.url = url;
+  void changeGif(GifProperty gif) => this.gifProperty = gif;
+  @action
+  void addHistory(String search) => searchHistory.add(search);
+  @action
+  void removeHistory(String search) => searchHistory.remove(search);
+  @action
+  void clearHistory() => searchHistory.clear();
 }

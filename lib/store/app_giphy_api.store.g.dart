@@ -39,21 +39,6 @@ mixin _$AppGiphyApi on _AppGiphyApi, Store {
     });
   }
 
-  final _$urlAtom = Atom(name: '_AppGiphyApi.url');
-
-  @override
-  String get url {
-    _$urlAtom.reportRead();
-    return super.url;
-  }
-
-  @override
-  set url(String value) {
-    _$urlAtom.reportWrite(value, super.url, () {
-      super.url = value;
-    });
-  }
-
   final _$languageAtom = Atom(name: '_AppGiphyApi.language');
 
   @override
@@ -66,6 +51,36 @@ mixin _$AppGiphyApi on _AppGiphyApi, Store {
   set language(String value) {
     _$languageAtom.reportWrite(value, super.language, () {
       super.language = value;
+    });
+  }
+
+  final _$searchHistoryAtom = Atom(name: '_AppGiphyApi.searchHistory');
+
+  @override
+  List<String> get searchHistory {
+    _$searchHistoryAtom.reportRead();
+    return super.searchHistory;
+  }
+
+  @override
+  set searchHistory(List<String> value) {
+    _$searchHistoryAtom.reportWrite(value, super.searchHistory, () {
+      super.searchHistory = value;
+    });
+  }
+
+  final _$gifPropertyAtom = Atom(name: '_AppGiphyApi.gifProperty');
+
+  @override
+  GifProperty get gifProperty {
+    _$gifPropertyAtom.reportRead();
+    return super.gifProperty;
+  }
+
+  @override
+  set gifProperty(GifProperty value) {
+    _$gifPropertyAtom.reportWrite(value, super.gifProperty, () {
+      super.gifProperty = value;
     });
   }
 
@@ -94,11 +109,44 @@ mixin _$AppGiphyApi on _AppGiphyApi, Store {
   }
 
   @override
-  void changeUrl(String url) {
+  void changeGif(GifProperty gif) {
     final _$actionInfo = _$_AppGiphyApiActionController.startAction(
-        name: '_AppGiphyApi.changeUrl');
+        name: '_AppGiphyApi.changeGif');
     try {
-      return super.changeUrl(url);
+      return super.changeGif(gif);
+    } finally {
+      _$_AppGiphyApiActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addHistory(String search) {
+    final _$actionInfo = _$_AppGiphyApiActionController.startAction(
+        name: '_AppGiphyApi.addHistory');
+    try {
+      return super.addHistory(search);
+    } finally {
+      _$_AppGiphyApiActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeHistory(String search) {
+    final _$actionInfo = _$_AppGiphyApiActionController.startAction(
+        name: '_AppGiphyApi.removeHistory');
+    try {
+      return super.removeHistory(search);
+    } finally {
+      _$_AppGiphyApiActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearHistory() {
+    final _$actionInfo = _$_AppGiphyApiActionController.startAction(
+        name: '_AppGiphyApi.clearHistory');
+    try {
+      return super.clearHistory();
     } finally {
       _$_AppGiphyApiActionController.endAction(_$actionInfo);
     }
@@ -109,8 +157,9 @@ mixin _$AppGiphyApi on _AppGiphyApi, Store {
     return '''
 search: ${search},
 topic: ${topic},
-url: ${url},
-language: ${language}
+language: ${language},
+searchHistory: ${searchHistory},
+gifProperty: ${gifProperty}
     ''';
   }
 }
