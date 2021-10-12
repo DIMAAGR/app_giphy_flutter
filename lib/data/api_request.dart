@@ -104,24 +104,19 @@ class ApiRequest {
 
   // CRIA A GRID DE GIFS
   _gifGridButtonBuilder(BuildContext context, AsyncSnapshot snapshot) {
-    return ListView(
-      children: [
-        GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
-            ),
-            shrinkWrap: true,
-            // TAMANHO DA GRID
-            itemCount: snapshot.data["data"].length,
-            // CONSTRUTOR DE ITEM
-            itemBuilder: (context, index) {
-              return GridButton(snapshot: snapshot, index: index);
-            }),
-        _loadingListCircle()
-      ],
-    );
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+        ),
+        shrinkWrap: true,
+        // TAMANHO DA GRID
+        itemCount: snapshot.data["data"].length,
+        // CONSTRUTOR DE ITEM
+        itemBuilder: (context, index) {
+          return GridButton(snapshot: snapshot, index: index);
+        });
   }
 
   _loadingListCircle() {

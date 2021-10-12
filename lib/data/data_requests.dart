@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:app_giphy_api/store/app_giphy_api.store.dart';
 import 'package:http/http.dart' as http;
 
 // ESTA CLASSE FAZ A REQUISIÇÃO DE DADOS DA API DO GIPHY
@@ -19,7 +16,8 @@ class DataRequest {
     Uri uri1 = Uri.parse(
         "https://api.giphy.com/v1/gifs/trending?api_key=DVZH7cEK2v8srRKFhOspvNNHqMVYbR1U&limit=$quantity&rating=g");
     Uri uri2 = Uri.parse(
-        "https:api.giphy.com/v1/gifs/search?api_key=DVZH7cEK2v8srRKFhOspvNNHqMVYbR1U&q=$search&limit=$quantity&offset=$offSet&rating=g&lang=$language");
+      "https://api.giphy.com/v1/gifs/search?api_key=DVZH7cEK2v8srRKFhOspvNNHqMVYbR1U&q=$search&limit=$quantity&offset=$offSet&rating=g&lang=$language",
+    );
     if (search == null ||
         search == "Trending") // SE NÃO FOR, REQUISITARÁ OS TRENDINGS
       response = await http.get(uri1);
