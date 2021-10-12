@@ -24,7 +24,7 @@ class DataRequest {
       response = await http.get(uri1);
     else // SE FOR, FARÁ A PESQUISA
       response = await http.get(uri2);
-
+    http.Client().close();
     return json.decode(
         response.body); // NO FINAL RETORNARÁ O CORPO DO JSON (RESPONSE)!
   }
