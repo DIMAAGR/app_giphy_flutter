@@ -1,4 +1,3 @@
-import 'package:app_giphy_api/components/circular_button.dart';
 import 'package:app_giphy_api/components/gif_topic_button.dart';
 import 'package:app_giphy_api/components/giphy_app_bar.dart';
 import 'package:app_giphy_api/data/api_request.dart';
@@ -7,7 +6,6 @@ import 'package:app_giphy_api/store/app_giphy_api.store.dart';
 import 'package:app_giphy_api/views/main/main_screen.events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {

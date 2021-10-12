@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class MainScreenEvents {
   topicbuttonAction(BuildContext context, AppGiphyApi provider, String topic) {
-    provider.changeTopic(topic);
+    provider.changeSearch(topic);
     Navigator.of(context).pushNamed(AppRoutes.GIF_LIST);
   }
 }
