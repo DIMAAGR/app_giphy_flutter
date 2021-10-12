@@ -153,6 +153,17 @@ mixin _$AppGiphyApi on _AppGiphyApi, Store {
   }
 
   @override
+  void changeLanguage(String language) {
+    final _$actionInfo = _$_AppGiphyApiActionController.startAction(
+        name: '_AppGiphyApi.changeLanguage');
+    try {
+      return super.changeLanguage(language);
+    } finally {
+      _$_AppGiphyApiActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 search: ${search},

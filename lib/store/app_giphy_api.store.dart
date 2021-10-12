@@ -49,4 +49,6 @@ abstract class _AppGiphyApi with Store {
   void removeHistory(String search) => searchHistory.remove(search);
   @action
   void clearHistory() => searchHistory.clear();
+  @action
+  void changeLanguage(String language) => this.language = language;
 }

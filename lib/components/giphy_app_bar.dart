@@ -35,7 +35,6 @@ class GiphyAppBar extends StatelessWidget with PreferredSizeWidget {
                 color: Color.fromARGB(255, 60, 60, 60),
               ),
               onPressed: () {
-                Navigator.pop(context);
                 Navigator.of(context).pushNamed(AppRoutes.SEARCH_VIEW);
               },
             ),
@@ -46,7 +45,10 @@ class GiphyAppBar extends StatelessWidget with PreferredSizeWidget {
                 size: 24,
                 color: Color.fromARGB(255, 60, 60, 60),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushNamed(AppRoutes.SETTINGS_VIEW);
+              },
             ),
           ],
         ),

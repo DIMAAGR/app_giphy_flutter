@@ -32,7 +32,7 @@ class _SearchViewState extends State<SearchView> {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, AppRoutes.HOME);
+                  //  Navigator.pushNamed(context, AppRoutes.HOME);
                 },
                 padding: 0,
                 color: Color.fromARGB(255, 235, 235, 235),

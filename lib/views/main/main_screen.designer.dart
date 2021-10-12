@@ -21,10 +21,6 @@ class _MainScreenState extends State<MainScreen> {
   MainScreenEvents _events = MainScreenEvents();
 
   //INITSTATE
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
                 context,
                 _apiRequest,
                 null,
+                _provider,
                 "Trending",
                 () => _events.topicbuttonAction(context, _provider, "Trending"),
               ),
@@ -54,6 +51,7 @@ class _MainScreenState extends State<MainScreen> {
                 context,
                 _apiRequest,
                 "reactions",
+                _provider,
                 "Reactions",
                 () =>
                     _events.topicbuttonAction(context, _provider, "Reactions"),
@@ -62,6 +60,7 @@ class _MainScreenState extends State<MainScreen> {
                 context,
                 _apiRequest,
                 "entertainment",
+                _provider,
                 "Entertainment",
                 () => _events.topicbuttonAction(
                     context, _provider, "entertainment"),
@@ -70,6 +69,7 @@ class _MainScreenState extends State<MainScreen> {
                 context,
                 _apiRequest,
                 "sports",
+                _provider,
                 "Sports",
                 () => _events.topicbuttonAction(context, _provider, "sports"),
               ),
@@ -77,6 +77,7 @@ class _MainScreenState extends State<MainScreen> {
                 context,
                 _apiRequest,
                 "Stickers",
+                _provider,
                 "Stickers",
                 () => _events.topicbuttonAction(context, _provider, "Stickers"),
               ),
@@ -84,6 +85,7 @@ class _MainScreenState extends State<MainScreen> {
                 context,
                 _apiRequest,
                 "Artists",
+                _provider,
                 "Artists",
                 () => _events.topicbuttonAction(context, _provider, "Artists"),
               ),
@@ -95,9 +97,9 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   _topicButton(BuildContext context, ApiRequest apiRequest, String? search,
-      String topicName, void Function() onTap) {
+      AppGiphyApi provider, String topicName, void Function() onTap) {
     return FutureBuilder(
-      future: _dataRequest.requestData(search, "0", "10"),
+      future: _dataRequest.requestData(search, "0", "10", provider.language),
       builder: (context, snapshot) => _topics(
           context: context,
           snapshot: snapshot,

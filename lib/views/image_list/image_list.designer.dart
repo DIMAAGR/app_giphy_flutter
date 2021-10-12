@@ -27,16 +27,22 @@ class _GifListState extends State<GifList> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 245, 245),
       appBar: GiphyAppBar(),
-      body: _result(context, _apiRequest, search),
+      body: _result(context, _apiRequest, search, _provider),
     );
   }
 
   // INTERFACE/BODY DO IMAGE LIST
-  _result(BuildContext context, ApiRequest api, String search) {
+  _result(BuildContext context, ApiRequest api, String search,
+      AppGiphyApi provider) {
     return Padding(
       padding: EdgeInsets.all(8),
       child: api.gifGridBuilder(
-          search: search, request: api, data: _dataRequest, context: context),
+        search: search,
+        request: api,
+        data: _dataRequest,
+        context: context,
+        provider: provider,
+      ),
     );
   }
 }
