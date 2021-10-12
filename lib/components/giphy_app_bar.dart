@@ -1,4 +1,5 @@
 import 'package:app_giphy_api/components/circular_button.dart';
+import 'package:app_giphy_api/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,6 +18,9 @@ class GiphyAppBar extends StatelessWidget with PreferredSizeWidget {
   AppBar build(BuildContext context) {
     return AppBar(
       elevation: 0,
+      iconTheme: IconThemeData(
+        color: Color.fromARGB(255, 60, 60, 60),
+      ),
       backgroundColor: Color.fromARGB(255, 245, 245, 245),
       title: SvgPicture.network(
           "https://upload.wikimedia.org/wikipedia/commons/8/82/Giphy-logo.svg"),
@@ -30,7 +34,10 @@ class GiphyAppBar extends StatelessWidget with PreferredSizeWidget {
                 size: 24,
                 color: Color.fromARGB(255, 60, 60, 60),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.of(context).pushNamed(AppRoutes.SEARCH_VIEW);
+              },
             ),
             CircularButton(
               padding: 16,
