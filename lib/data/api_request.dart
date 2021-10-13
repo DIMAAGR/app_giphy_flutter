@@ -1,3 +1,4 @@
+import 'package:app_giphy_api/components/circular_button.dart';
 import 'package:app_giphy_api/components/grid_button.dart';
 import 'package:app_giphy_api/data/data_requests.dart';
 import 'package:app_giphy_api/store/app_giphy_api.store.dart';
@@ -81,11 +82,16 @@ class ApiRequest {
     required DataRequest data,
     required BuildContext context,
     required AppGiphyApi provider,
+    required void Function() backFunction,
+    required void Function() forwardFunction,
+    required int page,
+    required int pagecount,
   }) {
     // COMEÇA RETORNANDO UM FUTURE BUILD
     return FutureBuilder(
         // RECEBE O REQUEST DATA PARA CONSTRUIR A GRADE
-        future: data.requestData(search, "0", "39", provider.language),
+        future:
+            data.requestData(search, page.toString(), "27", provider.language),
         // BUILDER
         builder: (context, snapshot) {
           // VERIFICA SE A CONEXÇÃO FOI ATIVA OU SE HOUVE UM ERRO
@@ -93,7 +99,8 @@ class ApiRequest {
             case ConnectionState.active:
             case ConnectionState.done:
               // CASO ESTEJA TUDO CORRETO CRIA A GRID DE GIFS
-              return _gifGridButtonBuilder(context, snapshot);
+              return _gifGridButtonBuilder(context, snapshot, backFunction,
+                  forwardFunction, page, pagecount);
             default:
               return request.sendWaitOrErrorMessage(
                 snapshot: snapshot,
@@ -103,20 +110,72 @@ class ApiRequest {
   }
 
   // CRIA A GRID DE GIFS
-  _gifGridButtonBuilder(BuildContext context, AsyncSnapshot snapshot) {
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        shrinkWrap: true,
-        // TAMANHO DA GRID
-        itemCount: snapshot.data["data"].length,
-        // CONSTRUTOR DE ITEM
-        itemBuilder: (context, index) {
-          return GridButton(snapshot: snapshot, index: index);
-        });
+  _gifGridButtonBuilder(
+      BuildContext context,
+      AsyncSnapshot snapshot,
+      void Function() onPressedBack,
+      void Function() onPressedForward,
+      int page,
+      int pagecount) {
+    ScrollController _scrollController = ScrollController();
+
+    return SingleChildScrollView(
+      controller: _scrollController,
+      child: Column(
+        children: [
+          GridView.builder(
+              controller: _scrollController,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              // Controllador
+              // VERIFICARÁ SE A GRID CHEGOU AO FINAL
+              shrinkWrap: true,
+              // TAMANHO DA GRID
+              itemCount: snapshot.data["data"].length,
+              // CONSTRUTOR DE ITEM
+              itemBuilder: (context, index) {
+                return GridButton(snapshot: snapshot, index: index);
+              }),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularButton(
+                    color: Color.fromARGB(255, 230, 230, 230),
+                    padding: 0,
+                    icon: Center(
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        color: Color.fromARGB(255, 60, 60, 60),
+                        size: 23,
+                      ),
+                    ),
+                    onPressed: onPressedBack),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text((pagecount + 1).toString()),
+                ),
+                CircularButton(
+                    padding: 0,
+                    color: Color.fromARGB(255, 230, 230, 230),
+                    icon: Center(
+                      child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Color.fromARGB(255, 60, 60, 60),
+                        size: 23,
+                      ),
+                    ),
+                    onPressed: onPressedForward),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   _loadingListCircle() {
