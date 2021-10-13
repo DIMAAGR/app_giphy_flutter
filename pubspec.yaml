@@ -28,7 +28,7 @@ dependencies:
   http_parser: ^4.0.0
   shelf: ^1.0.0
   flutter_svg: ^0.22.0
-  share: ^0.6.1+1
+  share: ^2.0.4
   transparent_image: ^1.0.0
   http: ^0.13.4
   flutter:
